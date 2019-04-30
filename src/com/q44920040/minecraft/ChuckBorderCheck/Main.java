@@ -4,16 +4,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class Main extends JavaPlugin implements Listener {
     private String BorderBlock;
     @Override
     public void onEnable() {
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+        File file = new File(getDataFolder(),"config.yml");
+        if (!file.exists()){
+            saveDefaultConfig();
+        }
         reloadPlugin();
         Bukkit.getServer().getPluginManager().registerEvents(this,this);
         super.onEnable();
@@ -25,13 +33,10 @@ public class Main extends JavaPlugin implements Listener {
         Block blockPlaced = event.getBlockPlaced();
         int MainId = blockPlaced.getTypeId();
         int OrderId = blockPlaced.getData();
-        String NewId = MainId+";"+OrderId;
+        String NewId = MainId+":"+OrderId;
         int x = blockPlaced.getX();
         int z = blockPlaced.getZ();
-        System.out.println("ID"+NewId);
-        System.out.println("此物品");
         if (CalculateBhuckBorder(x,z)){
-            System.out.println("在边缘");
             if (BorderBlock.contains(NewId)){
                 event.setCancelled(true);
             }
@@ -56,8 +61,8 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player&&label.equalsIgnoreCase("cbc")){
-            if (args.length==1&&args[0].equalsIgnoreCase("reload")){
+        if (label.equalsIgnoreCase("cbc")){
+            if (sender.isOp()&&args.length==1&&args[0].equalsIgnoreCase("reload")){
                 reloadPlugin();
                 sender.sendMessage("§e§l[CBC]§2重载插件成功");
             }
