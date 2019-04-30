@@ -39,6 +39,11 @@ public class Main extends JavaPlugin implements Listener {
         if (CalculateBhuckBorder(x,z)){
             if (BorderBlock.contains(NewId)){
                 event.setCancelled(true);
+                try{
+                    event.getPlayer().sendMessage(getConfig().getString("Msg"));
+                }catch (Exception e){
+
+                }
             }
         }
     }
