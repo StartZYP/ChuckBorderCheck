@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="ChuckBorderCheck:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChuckBorderCheck_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ChuckBorderCheck.jar">
+        <element id="module-output" name="ChuckBorderCheck" />
+      </element>
+    </root>
+  </artifact>
+</component>
