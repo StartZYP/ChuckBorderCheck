@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -30,6 +31,12 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void PlayerPlaceBlock(BlockPlaceEvent event){
+        try{
+            event.getPlayer();
+        }catch (Exception e){
+            event.setCancelled(true);
+            return;
+        }
         Block blockPlaced = event.getBlockPlaced();
         int MainId = blockPlaced.getTypeId();
         int OrderId = blockPlaced.getData();
